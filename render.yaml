@@ -2,10 +2,9 @@ services:
   - type: web
     name: andes-observa-studio
     runtime: node
-    repo: https://github.com/AndesObservatorio/Andes-Observa
-    branch: main
-    buildCommand: npm install
+    buildCommand: npm install --production
     startCommand: node server.js
     envVars:
       - key: OPENWEATHER_API_KEY
         value: d09f8e617b1edc25931a67647b622bd6
+    plan: free
