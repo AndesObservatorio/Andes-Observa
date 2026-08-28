@@ -11,7 +11,7 @@ app.use(express.json());
 app.get('/api/weather', async (req, res) => {
   try {
     const { city, country } = req.query;
-    const API_BASE = 'https://andes-observa-studio.onrender.com';
+    const API_BASE = 'https://andes-observa-studio-node.onrender.com';
     
     if (!API_KEY) {
       return res.status(500).json({ error: 'API Key no configurada en el servidor' });
