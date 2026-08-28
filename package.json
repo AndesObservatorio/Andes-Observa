@@ -1,14 +1,15 @@
 {
-  "name": "andes-observa-studio-api",
+  "name": "andes-api",
   "version": "1.0.0",
-  "description": "API proxy para Andes Observatorio Studio",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "node-fetch": "^2.6.7"
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }

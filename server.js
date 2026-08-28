@@ -1,20 +1,30 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Endpoint para obtener clima de una ciudad
+// Endpoint de salud (para verificar que el servidor funciona)
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    message: 'Andes Observa Studio funcionando correctamente'
+  });
+});
+
+// Endpoint para clima de una ciudad
 app.get('/api/weather', async (req, res) => {
   try {
     const { city, country } = req.query;
     const API_KEY = process.env.OPENWEATHER_API_KEY;
     
     if (!API_KEY) {
-      return res.status(500).json({ error: 'API Key no configurada en el servidor' });
+      return res.status(500).json({ 
+        error: 'API Key no configurada en el servidor' 
+      });
     }
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${API_KEY}`;
@@ -54,11 +64,6 @@ app.get('/api/weather/multiple', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-
-// Endpoint de salud
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {
