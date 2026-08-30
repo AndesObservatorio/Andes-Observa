@@ -9,7 +9,7 @@ app.use(express.json());
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'ok', 
-    message: 'Andes Observa Studio funcionando',
+    message: 'Andes Observa Studio funcionando correctamente',
     timestamp: new Date().toISOString()
   });
 });
@@ -20,13 +20,18 @@ app.get('/api/weather', async (req, res) => {
     const API_KEY = process.env.OPENWEATHER_API_KEY;
     
     if (!API_KEY) {
-      return res.status(500).json({ error: 'API Key no configurada' });
+      return res.status(500).json({ error: 'API Key no configurada en el servidor' });
     }
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
-    res.json(data);
+    
+    if (response.ok) {
+      res.json(data);
+    } else {
+      res.status(response.status).json(data);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,3 +40,4 @@ app.get('/api/weather', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en puerto ${PORT}`);
 });
+
